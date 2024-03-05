@@ -47,9 +47,13 @@ class UserController extends Controller
         //     abort(404);
         // });
 
-        $user = UserModel::findOr(20, ['username', 'nama'], function() {
-            abort(404);
-        });
+        // $user = UserModel::findOr(20, ['username', 'nama'], function() {
+        //     abort(404);
+        // });
+
+        // $user = UserModel::findOrFail(1); // ambil data user dengan id 1, jika tidak ada data maka tampilkan error 404
+
+        $user = UserModel::where('username', 'manager9')->firstOrFail(); // ambil data user dengan username manager-9, jika tidak ada data maka tampilkan error 404
 
         return view('user', ['data' => $user]);
     }
