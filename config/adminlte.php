@@ -327,7 +327,7 @@ return [
             'url' => '/kategori',
             'icon' => 'far fa-fw fa-list-alt',
             // 'label' => 4,
-            'label_color' => 'success',
+            // 'label_color' => 'success',
         ],
         ['header' => 'account_settings'],
         [
