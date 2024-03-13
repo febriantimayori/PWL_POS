@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-{{-- Customize layput sections --}}
+{{-- Customize layout sections --}}
 @section('subtitle', 'Kategori')
 @section('content_header_title', 'Kategori')
 @section('content_header_subtitle', 'Create')
@@ -8,7 +8,7 @@
 {{-- Content body: main page content --}}
 @section('content')
     <div class="container">
-        <div class="card card_primary">
+        <div class="card card-primary">
             <div class="card-header">
                 <h3 class="card-title">Buat kategori baru</h3>
             </div>
