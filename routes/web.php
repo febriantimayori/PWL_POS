@@ -23,6 +23,12 @@ Route::get('/', function () {
 //Level
 Route::get('/level', [LevelController::class, 'index']);
 
+//Create Level
+Route::get('/level/tambah', [LevelController::class, 'tambah']);
+
+//Store Level
+Route::post('/level/tambah_simpan', [LevelController::class, 'tambah_simpan'])->name('/level/tambah_simpan');
+
 //Kategori
 Route::get('/kategori', [KategoriController::class, 'index'])->name('/kategori');
 
@@ -50,3 +56,7 @@ Route::put('/user/ubah_simpan/{id}', [UserController::class, 'ubah_simpan'])->na
 
 //Delete User
 Route::get('/user/hapus/{id}', [UserController::class, 'hapus'])->name('/user/hapus');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
