@@ -4,6 +4,7 @@ use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\POSController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,6 +63,5 @@ Route::put('/user/ubah_simpan/{id}', [UserController::class, 'ubah_simpan'])->na
 //Delete User
 Route::get('/user/hapus/{id}', [UserController::class, 'hapus'])->name('/user/hapus');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+//Route m_user
+Route::resource('m_user', POSController::class);
