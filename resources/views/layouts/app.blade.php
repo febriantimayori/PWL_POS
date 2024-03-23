@@ -44,13 +44,14 @@
 @push('js')
     <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
 @endpush
+
 @stack('scripts')
 
 {{-- Add common CSS customizations --}}
 @push('css')
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.2/css/dataTables.dataTables.css" />
     <style type="text/css">
-        {{-- You can add AdminLTE customizations here --}}
+        /* You can add AdminLTE customizations here */
         /*
         .card-header {
             border-bottom: none;
@@ -59,5 +60,17 @@
             font-weight: 600;
         }
         */
+        .content-wrapper {
+            overflow-y: auto; /* Mengatur overflow-y menjadi auto */
+            padding-bottom: 60px; /* Tambahkan ruang bawah untuk footer */
+        }
+
+        .main-footer {
+            position: fixed;
+            bottom: 0;
+            width: 80%;
+            background-color: #f4f6f9;
+            padding: 10px 20px;
+        }
     </style>
 @endpush

@@ -17,12 +17,12 @@ class UserController extends Controller
     public function index() 
     {
         $user = UserModel::with('level')->get();
-        return view('user.user', ['data' => $user]);
+        return view('user.index', ['data' => $user]);
     }
 
-    public function tambah() 
+    public function create() 
     {
-        return view('user.user_tambah');
+        return view('user.create');
     }
 
     public function tambah_simpan(Request $request)

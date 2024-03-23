@@ -1,11 +1,13 @@
 @extends('adminlte::page')
-@section('title', 'Add Level')
+
+@section('title', 'Create Level')
 @section('content_header')
-    <h1>Add Level</h1>
+    <h1>Create Level</h1>
 @stop
+
 @section('content')
     <div class="col-md-12">
-        <div class="card card-gray">
+        <div class="card card-primary">
             <div class="card-header">
                 <h3 class="card-title">Form Tambah Data Level</h3>
             </div>

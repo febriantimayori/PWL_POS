@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\KategoriModel;
+use App\Models\LevelModel;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -12,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class KategoriDataTable extends DataTable
+class LevelDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -22,22 +22,21 @@ class KategoriDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('actions', function ($kategori) {
-                return '<a href="' . route('/kategori/update', ['id' => $kategori->kategori_id]) . '" class="btn btn-primary mr-2">
-                    <i class="fa fa-pencil-alt" style="color: white; font-size: 12px;"></i>
-                    </a>' .
-                    '<a href="' . route('/kategori/delete', ['id' => $kategori->kategori_id]) . '" class="btn btn-danger" onclick="return confirm(\'Are you sure you want to delete?\')">
-                    <i class="fa fa-trash" style="color: white; font-size: 12px;"></i>
-                    </a>';
-            })
-            ->rawColumns(['actions'])
-            ->setRowId('id');
+        ->addColumn('actions', function ($user) {
+            return 
+                '<a href="' . route('/kategori/update', ['id' => $user->level_id]) . '" class="btn btn-primary mr-2">
+                <i class="fa fa-pencil-alt" style="color: white; font-size: 12px;"></i></a>' .
+                '<a href="' . route('/kategori/delete', ['id' => $user->level_id]) . '" class="btn btn-danger" onclick="return confirm(\'Lanjutkan Menghapus Data?\')">
+                <i class="fa fa-trash" style="color: white; font-size: 12px;"></i></a>';
+        })
+        ->rawColumns(['actions'])
+        ->setRowId('id');
     }
 
     /**
      * Get the query source of dataTable.
      */
-    public function query(KategoriModel $model): QueryBuilder
+    public function query(LevelModel $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -48,11 +47,12 @@ class KategoriDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('kategori-table')
+                    ->setTableId('level-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
-                    ->orderBy(0, 'desc')
+                    ->orderBy(1)
+                    ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
                         Button::make('csv'),
@@ -69,16 +69,15 @@ class KategoriDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('kategori_id')->width('15%'), 
-            Column::make('kategori_kode')->width('15%'), 
-            Column::make('kategori_nama')->width('20%'), 
-            Column::make('created_at')->width('10%'), 
-            Column::make('updated_at')->width('10%'), 
-            Column::computed('actions')
-                ->exportable(false)
-                ->printable(false)
-                ->width(20) 
-                ->addClass('text-center'),
+            Column::computed('action')
+                  ->exportable(false)
+                  ->printable(false)
+                  ->width(60)
+                  ->addClass('text-center'),
+            Column::make('id'),
+            Column::make('add your columns'),
+            Column::make('created_at'),
+            Column::make('updated_at'),
         ];
     }
 
@@ -87,6 +86,6 @@ class KategoriDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Kategori_' . date('YmdHis');
+        return 'Level_' . date('YmdHis');
     }
 }

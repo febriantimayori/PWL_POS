@@ -24,12 +24,12 @@ class LevelController extends Controller
 
         //menampilkan data
         $data = DB::select('select * from m_level');
-        return view('level.level', ['data' => $data]);
+        return view('level.index', ['data' => $data]);
     }
 
-    public function tambah()
+    public function create()
     {
-        return view('level.tambah');
+        return view('level.create');
     }
 
     public function tambah_simpan(Request $request)

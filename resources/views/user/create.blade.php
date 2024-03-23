@@ -1,11 +1,13 @@
 @extends('adminlte::page')
-@section('title', 'Add User')
+
+@section('title', 'Create User')
 @section('content_header')
-    <h1>Add User</h1>
+    <h1>Create User</h1>
 @stop
+
 @section('content')
     <div class="col-md-12">
-        <div class="card card-gray">
+        <div class="card card-primary">
             <div class="card-header">
                 <h3 class="card-title">Form Tambah Data User</h3>
             </div>
