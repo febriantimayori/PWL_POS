@@ -6,6 +6,8 @@ use App\DataTables\KategoriDataTable;
 use App\Models\KategoriModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\StorePostRequest;
+use Illuminate\Http\RedirectResponse;
 
 class KategoriController extends Controller
 {
@@ -19,26 +21,36 @@ class KategoriController extends Controller
         return view('kategori.create');
     }
 
-    public function store(Request $request)
+    public function store(StorePostRequest $request): RedirectResponse
     {
-        $validated = $request->validate(
-            [
-                'kodeKategori' => 'bail|required|unique:m_kategori,kategori_kode',
-                'namaKategori' => 'required'
-            ]
-        );
+        $validated = $request->validated();
 
-        if (!$validated) {
-            return redirect('/kategori/create')->withInput()->withErrors($validated);
-        }
-
-        KategoriModel::create([
-            'kategori_kode' => $request->kodeKategori,
-            'kategori_nama' => $request->namaKategori
-        ]);
+        $validated = $request->safe()->only('kategori_kode', 'kategori_nama');
+        $validated = $request->safe()->except('kategori_kode', 'kategori_nama');
 
         return redirect('/kategori');
     }
+    
+    // public function store(Request $request)
+    // {
+    //     $validated = $request->validate(
+    //         [
+    //             'kodeKategori' => 'bail|required|unique:m_kategori,kategori_kode',
+    //             'namaKategori' => 'required'
+    //         ]
+    //     );
+
+    //     if (!$validated) {
+    //         return redirect('/kategori/create')->withInput()->withErrors($validated);
+    //     }
+
+    //     KategoriModel::create([
+    //         'kategori_kode' => $request->kodeKategori,
+    //         'kategori_nama' => $request->namaKategori
+    //     ]);
+
+    //     return redirect('/kategori');
+    // }
 
     public function update($id)
     {

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\UserModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\StorePostRequest;
+use Illuminate\Http\RedirectResponse;
 
 class UserController extends Controller
 {
@@ -23,6 +25,22 @@ class UserController extends Controller
     public function create() 
     {
         return view('user.create');
+    }
+
+    public function store(StorePostRequest $request) : RedirectResponse 
+    {
+        // The incoming request is valid
+
+        // Retrieve the validated input data
+        $validated = $request->validated();
+
+        // Retrieve a portion of the validated input data
+        $validated = $request->safe()->only(['username', 'password', 'nama', 'level_id']);
+        $validated = $request->safe()->except(['username', 'password', 'nama', 'level_id']);
+
+        // Store the post
+
+        return redirect('/user');
     }
 
     public function tambah_simpan(Request $request)

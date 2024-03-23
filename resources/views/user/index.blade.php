@@ -1,7 +1,6 @@
-@extends('layout.app')
+@extends('layouts.app')
 
 {{-- Customize layout sections  --}}
-
 @section('subtitle', 'Level')
 @section('content_header_title', 'Home')
 @section('content_header_subtitle', 'User')
@@ -12,7 +11,7 @@
             <div class="card-header">Manage User</div>
             <div class="card-body">
                 <a href="{{ route('/user/create') }}" class="btn btn-primary mb-3">+ Add User</a>
-                {{-- {{ $dataTable->table() }} --}}
+                {{ $dataTable->table() }}
             </div>
         </div>
     </div>

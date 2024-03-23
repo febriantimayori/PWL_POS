@@ -25,8 +25,9 @@ Route::get('/level', [LevelController::class, 'index'])->name('/level/create');
 
 //Create Level
 Route::get('/level/create', [LevelController::class, 'create'])->name('/level/create');
-
 //Store Level
+Route::post('/level', [LevelController::class, 'store']);
+
 Route::post('/level/tambah_simpan', [LevelController::class, 'tambah_simpan'])->name('/level/tambah_simpan');
 
 //Kategori
@@ -34,6 +35,7 @@ Route::get('/kategori', [KategoriController::class, 'index'])->name('/kategori')
 
 //Create Kategori
 Route::get('/kategori/create', [KategoriController::class, 'create'])->name('/kategori/create');
+//Store Kategori
 Route::post('/kategori', [KategoriController::class, 'store']);
 
 //Edit Kategori
@@ -45,6 +47,9 @@ Route::get('/kategori/delete/{id}', [KategoriController::class, 'delete'])->name
 
 //User
 Route::get('/user', [UserController::class, 'index'])->name('/user');
+
+//Store User
+Route::post('/user', [UserController::class, 'store']);
 
 //Add User
 Route::get('/user/create', [UserController::class, 'create'])->name('/user/create');
