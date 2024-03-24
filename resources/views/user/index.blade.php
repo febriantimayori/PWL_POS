@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 {{-- Customize layout sections  --}}
-@section('subtitle', 'Level')
+@section('subtitle', 'User')
 @section('content_header_title', 'Home')
 @section('content_header_subtitle', 'User')
 

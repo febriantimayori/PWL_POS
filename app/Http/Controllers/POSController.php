@@ -50,7 +50,7 @@ class POSController extends Controller
     public function show(string $id)
     {
         $useri = m_user::findOrFail($id);
-        return view('m_user.show', compact('usero'));
+        return view('m_user.show', compact('useri'));
     }
 
     /**

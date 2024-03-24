@@ -21,47 +21,60 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//Level
-Route::get('/level', [LevelController::class, 'index'])->name('/level/create');
+//Route Kategori
+Route::prefix('kategori')->group(function () {
+    Route::get('/', [KategoriController::class, 'index'])->name('/kategori');
 
-//Create Level
-Route::get('/level/create', [LevelController::class, 'create'])->name('/level/create');
-//Store Level
-Route::post('/level', [LevelController::class, 'store']);
+    //Create Kategori
+    Route::get('/create', [KategoriController::class, 'create'])->name('/kategori/create');
 
-Route::post('/level/tambah_simpan', [LevelController::class, 'tambah_simpan'])->name('/level/tambah_simpan');
+    //Store Kategori
+    Route::post('/', [KategoriController::class, 'store'])->name('/kategori/store');
 
-//Kategori
-Route::get('/kategori', [KategoriController::class, 'index'])->name('/kategori');
+    //Edit Kategori
+    Route::get('/update/{id}', [KategoriController::class, 'update'])->name('/kategori/update');
+    Route::put('/update_simpan/{id}', [KategoriController::class, 'update_simpan'])->name('/kategori/update_simpan');
 
-//Create Kategori
-Route::get('/kategori/create', [KategoriController::class, 'create'])->name('/kategori/create');
-//Store Kategori
-Route::post('/kategori', [KategoriController::class, 'store']);
+    //Delete Kategori
+    Route::get('/delete/{id}', [KategoriController::class, 'delete'])->name('/kategori/delete');
+});
 
-//Edit Kategori
-Route::get('/kategori/update/{id}', [KategoriController::class, 'update'])->name('/kategori/update');
-Route::put('/kategori/update_simpan/{id}', [KategoriController::class, 'update_simpan'])->name('/kategori/update_simpan');
 
-//Delete Kategori
-Route::get('/kategori/delete/{id}', [KategoriController::class, 'delete'])->name('/kategori/delete');
+//Route User
+Route::prefix('user')->group(function () {
+    Route::get('/', [UserController::class, 'index'])->name('/user');
 
-//User
-Route::get('/user', [UserController::class, 'index'])->name('/user');
+    //Create User
+    Route::get('/create', [UserController::class, 'create'])->name('/user/create');
 
-//Store User
-Route::post('/user', [UserController::class, 'store']);
+    //Store User
+    Route::post('/', [UserController::class, 'store'])->name('/user/store');
 
-//Add User
-Route::get('/user/create', [UserController::class, 'create'])->name('/user/create');
-Route::post('/user/tambah_simpan', [UserController::class, 'tambah_simpan'])->name('/user/tambah_simpan');
+    //Edit User
+    Route::get('/update/{id}', [UserController::class, 'update'])->name('/user/update');
+    Route::put('/update_simpan/{id}', [UserController::class, 'update_simpan'])->name('/user/update_simpan');
 
-//Update User
-Route::get('/user/ubah/{id}', [UserController::class, 'ubah'])->name('/user/ubah');
-Route::put('/user/ubah_simpan/{id}', [UserController::class, 'ubah_simpan'])->name('/user/ubah_simpan');
+    //Delete User
+    Route::get('/delete/{id}', [UserController::class, 'delete'])->name('/user/delete');
+});
 
-//Delete User
-Route::get('/user/hapus/{id}', [UserController::class, 'hapus'])->name('/user/hapus');
+//Route Level
+Route::prefix('level')->group(function () {
+    Route::get('/', [LevelController::class, 'index'])->name('/level');
+
+    //Create Level
+    Route::get('/create', [LevelController::class, 'create'])->name('/level/create');
+
+    //Store Level
+    Route::post('/', [LevelController::class, 'store'])->name('/level/store');
+
+    //Edit Level
+    Route::get('/update/{id}', [LevelController::class, 'update'])->name('/level/update');
+    Route::put('/update_simpan/{id}', [LevelController::class, 'update_simpan'])->name('/level/update_simpan');
+
+    //Delete Level
+    Route::get('/delete/{id}', [LevelController::class, 'delete'])->name('/level/delete');
+});
 
 //Route m_user
 Route::resource('m_user', POSController::class);

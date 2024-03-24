@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\LevelDataTable;
+use App\Models\LevelModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StorePostRequest;
@@ -9,8 +11,10 @@ use Illuminate\Http\RedirectResponse;
 
 class LevelController extends Controller
 {
-    public function index()
+    public function index(LevelDataTable $dataTable) 
     {
+        return $dataTable->render('level.index');
+
         // <-- Insert data -->
         // DB::insert('insert into m_level(level_kode, level_nama, created_at) values(?, ?, ?)', ['CUS', 'Pelanggan', now()]);
 
@@ -25,8 +29,8 @@ class LevelController extends Controller
         // return 'Delete data berhasil. Jumlah data yang dihapus: ' . $row. ' baris';
 
         //menampilkan data
-        $data = DB::select('select * from m_level');
-        return view('level.index', ['data' => $data]);
+        // $data = DB::select('select * from m_level');
+        // return view('level.index', ['data' => $data]);
     }
 
     public function create()
@@ -50,9 +54,34 @@ class LevelController extends Controller
         return redirect('/level');
     }
 
-    public function tambah_simpan(Request $request)
+    // public function update_simpan(Request $request)
+    // {
+    //     DB::insert('insert into m_level(level_kode, level_nama, created_at) values(?, ?, ?)', [$request->level_kode, $request->level_nama, now()]);
+    //     return redirect('/level');
+    // }
+
+    public function update($id)
     {
-        DB::insert('insert into m_level(level_kode, level_nama, created_at) values(?, ?, ?)', [$request->level_kode, $request->level_nama, now()]);
+        $level = LevelModel::find($id);
+        return view('level.level_update', ['data' => $level]);
+    }
+
+    public function update_simpan($id, Request $request)
+    {
+        $level = LevelModel::find($id);
+
+        $level->level_kode = $request->level_kode;
+        $level->level_nama = $request->level_nama;
+
+        $level->save();
+        return redirect('/level');
+    }
+
+    public function delete($id)
+    {
+        $level = LevelModel::find($id);
+        $level->delete();
+        
         return redirect('/level');
     }
 }

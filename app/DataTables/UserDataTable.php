@@ -2,7 +2,6 @@
 
 namespace App\DataTables;
 
-use App\Models\User;
 use App\Models\UserModel;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
@@ -24,11 +23,12 @@ class UserDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('actions', function ($user) {
-                return 
-                    '<a href="' . route('/kategori/update', ['id' => $user->user_id]) . '" class="btn btn-primary mr-2">
-                    <i class="fa fa-pencil-alt" style="color: white; font-size: 12px;"></i></a>' .
-                    '<a href="' . route('/kategori/delete', ['id' => $user->user_id]) . '" class="btn btn-danger" onclick="return confirm(\'Lanjutkan Menghapus Data?\')">
-                    <i class="fa fa-trash" style="color: white; font-size: 12px;"></i></a>';
+                return '<a href="' . route('/user/update', ['id' => $user->user_id]) . '" class="btn btn-primary mr-2">
+                    <i class="fa fa-pencil-alt" style="color: white; font-size: 12px;"></i>
+                    </a>' .
+                    '<a href="' . route('/user/delete', ['id' => $user->user_id]) . '" class="btn btn-danger" onclick="return confirm(\'Are you sure you want to delete?\')">
+                    <i class="fa fa-trash" style="color: white; font-size: 12px;"></i>
+                    </a>';
             })
             ->rawColumns(['actions'])
             ->setRowId('id');
@@ -52,7 +52,7 @@ class UserDataTable extends DataTable
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
-                    ->orderBy(1)
+                    ->orderBy(0, 'desc')
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),

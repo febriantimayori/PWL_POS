@@ -22,16 +22,17 @@ class LevelDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-        ->addColumn('actions', function ($user) {
-            return 
-                '<a href="' . route('/kategori/update', ['id' => $user->level_id]) . '" class="btn btn-primary mr-2">
-                <i class="fa fa-pencil-alt" style="color: white; font-size: 12px;"></i></a>' .
-                '<a href="' . route('/kategori/delete', ['id' => $user->level_id]) . '" class="btn btn-danger" onclick="return confirm(\'Lanjutkan Menghapus Data?\')">
-                <i class="fa fa-trash" style="color: white; font-size: 12px;"></i></a>';
-        })
-        ->rawColumns(['actions'])
-        ->setRowId('id');
-    }
+            ->addColumn('actions', function ($level) {
+                return '<a href="' . route('/level/update', ['id' => $level->level_id]) . '" class="btn btn-primary mr-2">
+                    <i class="fa fa-pencil-alt" style="color: white; font-size: 12px;"></i>
+                    </a>' .
+                    '<a href="' . route('/level/delete', ['id' => $level->level_id]) . '" class="btn btn-danger" onclick="return confirm(\'Are you sure you want to delete?\')">
+                    <i class="fa fa-trash" style="color: white; font-size: 12px;"></i>
+                    </a>';
+            })
+            ->rawColumns(['actions'])
+            ->setRowId('id');
+        }
 
     /**
      * Get the query source of dataTable.
@@ -69,15 +70,16 @@ class LevelDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('add your columns'),
+            Column::make('level_id'),
+            Column::make('level_kode'),
+            Column::make('level_nama'),
             Column::make('created_at'),
             Column::make('updated_at'),
+            Column::computed('actions')
+                  ->exportable(false)
+                  ->printable(false)
+                  ->width(150)
+                  ->addClass('text-center'),
         ];
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\UserDataTable;
 use App\Models\UserModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -16,10 +17,11 @@ class UserController extends Controller
     //     return view('user', ['data' => $user]);
     // }
 
-    public function index() 
+    public function index(UserDataTable $dataTable) 
     {
-        $user = UserModel::with('level')->get();
-        return view('user.index', ['data' => $user]);
+        // $user = UserModel::with('level')->get();
+        // return view('user.index', ['data' => $user]);
+        return $dataTable->render('user.index');
     }
 
     public function create() 
@@ -54,13 +56,13 @@ class UserController extends Controller
         return redirect('/user');
     }
 
-    public function ubah($id)
+    public function update($id)
     {
         $user = UserModel::find($id);
-        return view('user.user_ubah', ['data' => $user]);
+        return view('user.user_update', ['data' => $user]);
     }
 
-    public function ubah_simpan($id, Request $request)
+    public function update_simpan($id, Request $request)
     {
         $user = UserModel::find($id);
 
@@ -72,7 +74,7 @@ class UserController extends Controller
         return redirect('/user');
     }
 
-    public function hapus($id)
+    public function delete($id)
     {
         $user = UserModel::find($id);
         $user->delete();
