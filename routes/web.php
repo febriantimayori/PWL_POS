@@ -6,6 +6,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\POSController;
+use App\Http\Controllers\BarangController;
+use App\Http\Controllers\StokController;
+use App\Http\Controllers\TransaksiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,61 +23,6 @@ use App\Http\Controllers\POSController;
 
 Route::get('/', function () {
     return view('welcome');
-});
-
-//Route Kategori
-Route::prefix('kategori')->group(function () {
-    Route::get('/', [KategoriController::class, 'index'])->name('/kategori');
-
-    //Create Kategori
-    Route::get('/create', [KategoriController::class, 'create'])->name('/kategori/create');
-
-    //Store Kategori
-    Route::post('/', [KategoriController::class, 'store'])->name('/kategori/store');
-
-    //Edit Kategori
-    Route::get('/update/{id}', [KategoriController::class, 'update'])->name('/kategori/update');
-    Route::put('/update_simpan/{id}', [KategoriController::class, 'update_simpan'])->name('/kategori/update_simpan');
-
-    //Delete Kategori
-    Route::get('/delete/{id}', [KategoriController::class, 'delete'])->name('/kategori/delete');
-});
-
-
-//Route User
-// Route::prefix('user')->group(function () {
-//     Route::get('/', [UserController::class, 'index'])->name('/user');
-
-//     //Create User
-//     Route::get('/create', [UserController::class, 'create'])->name('/user/create');
-
-//     //Store User
-//     Route::post('/', [UserController::class, 'store'])->name('/user/store');
-
-//     //Edit User
-//     Route::get('/update/{id}', [UserController::class, 'update'])->name('/user/update');
-//     Route::put('/update_simpan/{id}', [UserController::class, 'update_simpan'])->name('/user/update_simpan');
-
-//     //Delete User
-//     Route::get('/delete/{id}', [UserController::class, 'delete'])->name('/user/delete');
-// });
-
-//Route Level
-Route::prefix('level')->group(function () {
-    Route::get('/', [LevelController::class, 'index'])->name('/level');
-
-    //Create Level
-    Route::get('/create', [LevelController::class, 'create'])->name('/level/create');
-
-    //Store Level
-    Route::post('/', [LevelController::class, 'store'])->name('/level/store');
-
-    //Edit Level
-    Route::get('/update/{id}', [LevelController::class, 'update'])->name('/level/update');
-    Route::put('/update_simpan/{id}', [LevelController::class, 'update_simpan'])->name('/level/update_simpan');
-
-    //Delete Level
-    Route::get('/delete/{id}', [LevelController::class, 'delete'])->name('/level/delete');
 });
 
 //Route m_user
@@ -93,4 +41,64 @@ Route::group(['prefix' => 'user'], function () {
     Route::get('/{id}/edit', [UserController::class, 'edit']); //menampilkan halaman form edit user
     Route::put('/{id}', [UserController::class, 'update']); //menyimpan perubahan data user
     Route::delete('/{id}', [UserController::class, 'destroy']); //menghapus data user
+});
+
+//JS 7 Tugas - Level
+Route::group(['prefix' => 'level'], function () {
+    Route::get('/', [LevelController::class, 'index']); //menampilkan halaman awal level
+    Route::post('/list', [LevelController::class, 'list']); //menampilkan data level dalam bentuk json untuk database
+    Route::get('create', [LevelController::class, 'create']); //menampilkan halaman form tambah level
+    Route::post('/', [LevelController::class, 'store']); //menyimpan data level baru
+    Route::get('/{id}', [LevelController::class, 'show']); //menampilkan detail level
+    Route::get('/{id}/edit', [LevelController::class, 'edit']); //menampilkan halaman form edit level
+    Route::put('/{id}', [LevelController::class, 'update']); //menyimpan perubahan data level
+    Route::delete('/{id}', [LevelController::class, 'destroy']); //menghapus data level
+});
+
+//JS 7 Tugas - Kategori
+Route::group(['prefix' => 'kategori'], function () {
+    Route::get('/', [KategoriController::class, 'index']); //menampilkan halaman awal kategori
+    Route::post('/list', [KategoriController::class, 'list']); //menampilkan data kategori dalam bentuk json untuk database
+    Route::get('create', [KategoriController::class, 'create']); //menampilkan halaman form tambah
+    Route::post('/', [KategoriController::class, 'store']); //menyimpan data kategori baru
+    Route::get('/{id}', [KategoriController::class, 'show']); //menampilkan detail kategori
+    Route::get('/{id}/edit', [KategoriController::class, 'edit']); //menampilkan halaman form edit k
+    Route::put('/{id}', [KategoriController::class, 'update']); //menyimpan perubahan data kategori
+    Route::delete('/{id}', [KategoriController::class, 'destroy']); //menghapus data kategori
+});
+
+//JS 7 Tugas - Barang
+Route::group(['prefix' => 'barang'], function () {
+    Route::get('/', [BarangController::class, 'index']); //menampilkan halaman awal barang
+    Route::post('/list', [BarangController::class, 'list']); //menampilkan data barang dalam bentuk json untuk database
+    Route::get('create', [BarangController::class, 'create']); //menampilkan halaman form tambah
+    Route::post('/', [BarangController::class, 'store']); //menyimpan data barang baru
+    Route::get('/{id}', [BarangController::class, 'show']); //menampilkan detail barang
+    Route::get('/{id}/edit', [BarangController::class, 'edit']); //menampilkan halaman form edit barang
+    Route::put('/{id}', [BarangController::class, 'update']); //menyimpan perubahan data barang
+    Route::delete('/{id}', [BarangController::class, 'destroy']); //menghapus data barang
+});
+
+//JS 7 Tugas - Stok
+Route::group(['prefix' => 'stok'], function () {
+    Route::get('/', [StokController::class, 'index']); //menampilkan halaman awal stok
+    Route::post('/list', [StokController::class, 'list']); //menampilkan data stok dalam bentuk json untuk database
+    Route::get('create', [StokController::class, 'create']); //menampilkan halaman form tambah
+    Route::post('/', [StokController::class, 'store']); //menyimpan data stok baru
+    Route::get('/{id}', [StokController::class, 'show']); //menampilkan detail stok
+    Route::get('/{id}/edit', [StokController::class, 'edit']); //menampilkan halaman form edit stok
+    Route::put('/{id}', [StokController::class, 'update']); //menyimpan perubahan data stok
+    Route::delete('/{id}', [StokController::class, 'destroy']); //menghapus data stok
+});
+
+//JS 7 Tugas - Transaksi
+Route::group(['prefix' => 'transaksi'], function () {
+    Route::get('/', [TransaksiController::class, 'index']); //menampilkan halaman awal transaksi
+    Route::post('/list', [TransaksiController::class, 'list']); //menampilkan data transaksi dalam bentuk json untuk database
+    Route::get('create', [TransaksiController::class, 'create']); //menampilkan halaman form tambah transaksi
+    Route::post('/', [TransaksiController::class, 'store']); //menyimpan data transaksi baru
+    Route::get('/{id}', [TransaksiController::class, 'show']); //menampilkan detail transaksi 
+    Route::get('/{id}/edit', [TransaksiController::class, 'edit']); //menampilkan halaman form edit transaksi
+    Route::put('/{id}', [TransaksiController::class, 'update']); //menyimpan perubahan data transaksi
+    Route::delete('/{id}', [TransaksiController::class, 'destroy']); //menghapus data transaksi
 });

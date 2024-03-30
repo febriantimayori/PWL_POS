@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class BarangModel extends Model
 {
     protected $table = 'm_barang';
-    protected $primaryKey = 'bareng_id';
+    protected $primaryKey = 'barang_id';
     
     protected $fillable = ['barang_id', 'kategori_id', 'barang_nama', 'harga_beli', 'harga_jual', 'created_at', 'update_at'];
     
