@@ -8,6 +8,7 @@ use App\Models\TransaksiModel;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\UserModel;
+use App\Models\StokModel;
 
 class TransaksiController extends Controller
 {
@@ -24,13 +25,21 @@ class TransaksiController extends Controller
 
         $activeMenu = 'transaksi'; //set menu yang aktif
 
-        return view('transaksi.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu]);
+        $users = UserModel::all(); //ambil data user untuk filter user
+
+        return view('transaksi.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu, 'user' => $users]);
     }
 
     // Ambil data transaksi dalam bentuk json untuk datatables
     public function list(Request $request)
     {
         $transaksis = TransaksiModel::select('penjualan_id', 'penjualan_kode','user_id', 'pembeli', 'penjualan_tanggal')->with('user');
+
+        // Filter data transaksi berdasarkan user_id
+        if ($request->user_id) {
+            $transaksis->where('user_id', $request->user_id);
+        }
+
                 
         return DataTables::of($transaksis)
             ->addIndexColumn() // menambahkan kolom index / no urut (default nama kolom: DT_RowIndex)
@@ -91,11 +100,14 @@ class TransaksiController extends Controller
             $detail->harga = $barang->harga_jual;
 
             $detail->save();
-            $barang->save();
+            // $barang->save();
+
+            // Kurangi stok barang
+            StokModel::where('barang_id', $request->barang_id[$i])->decrement('stok_jumlah', $request->jumlah[$i]);
         }
 
         // dd($request->all());
-
+        
         return redirect('/transaksi')->with('success', 'Data transaksi berhasil disimpan');
     }
 

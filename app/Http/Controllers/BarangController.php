@@ -23,7 +23,9 @@ class BarangController extends Controller
 
         $activeMenu = 'barang'; //set menu yang aktif
 
-        return view('barang.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu]);
+        $kategori = KategoriModel::all(); //ambil data kategori untuk filter kategori
+
+        return view('barang.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu, 'kategori' => $kategori]);
     }
 
     // Ambil data barang dalam bentuk json untuk datatables
@@ -31,6 +33,11 @@ class BarangController extends Controller
     {
         $barangs = BarangModel::select('barang_id', 'kategori_id', 'barang_kode', 'barang_nama', 'harga_beli', 'harga_jual')
                 ->with('kategori');
+
+        // Filter data barang berdasarkan kategori_id
+        if ($request->kategori_id) {
+            $barangs->where('kategori_id', $request->kategori_id);
+        }
 
         return DataTables::of($barangs)
             ->addIndexColumn() // menambahkan kolom index / no urut (default nama kolom: DT_RowIndex)

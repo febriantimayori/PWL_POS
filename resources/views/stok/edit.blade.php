@@ -23,7 +23,9 @@
                     <select class="form-control" id="barang_nama" name="barang_nama" required>
                         <option value="">- Pilih Nama Barang -</option>
                         @foreach($barang as $item)
-                        <option value="{{ $item->barang_nama }}">{{ $item->barang_nama }}</option>
+                        <option value="{{ $item->barang_nama }}" @if ($item->barang_id == $stok->barang_id)
+                            selected
+                        @endif>{{ $item->barang_nama }}</option>
                         @endforeach
                     </select>
                     @error('barang_nama')
@@ -37,7 +39,9 @@
                     <select class="form-control" id="username" name="username" required>
                         <option value="">- Pilih PIC -</option>
                         @foreach($user as $item)
-                        <option value="{{ $item->username }}">{{ $item->username }}</option>
+                        <option value="{{ $item->username }}" @if ($item->user_id == $stok->user_id)
+                            selected
+                        @endif>{{ $item->username }}</option>
                         @endforeach
                     </select>
                     @error('username')

@@ -23,7 +23,9 @@ class StokController extends Controller
 
         $activeMenu = 'stok'; //set menu yang aktif
 
-        return view('stok.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu]);
+        $user = UserModel::all(); //ambil data user untuk filter user
+
+        return view('stok.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu, 'user' => $user]);
     }
 
     // Ambil data stok dalam bentuk json untuk datatables
@@ -31,6 +33,11 @@ class StokController extends Controller
     {
         $stoks = StokModel::select('stok_id', 'barang_id', 'user_id', 'stok_tanggal', 'stok_jumlah')
                 ->with('barang')->with('user');
+
+        // Filter data stok berdasarkan user_id
+        if ($request->user_id) {
+            $stoks->where('user_id', $request->user_id);
+        }
 
         return DataTables::of($stoks)
             ->addIndexColumn() // menambahkan kolom index / no urut (default nama kolom: DT_RowIndex)
