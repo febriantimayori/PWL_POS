@@ -80,7 +80,7 @@ class TransaksiController extends Controller
     {
         $request->validate([
             'user_id' => 'required',
-            'pembeli' => 'required',
+            'pembeli' => 'required|string|max:100',
         ]);
 
         $transaksi = new TransaksiModel();
@@ -135,7 +135,7 @@ class TransaksiController extends Controller
     // Menampilkan halaman form edit transaksi
     public function edit($id)
     {
-        $transaksi = TransaksiModel::find($id)->with('detail_penjualan')->with('user')->first();
+        $transaksi = TransaksiModel::with('user')->with('detail_penjualan')->find($id);
 
         $breadcrumb = (object) [
             'title' => 'Edit Transaksi',
@@ -161,7 +161,7 @@ class TransaksiController extends Controller
     {
         $request->validate([
             'user_id' => 'required',
-            'pembeli' => 'required',
+            'pembeli' => 'required|string|max:100',
         ]);
 
         $transaksi = TransaksiModel::find($id);

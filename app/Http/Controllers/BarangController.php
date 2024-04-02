@@ -76,10 +76,11 @@ class BarangController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'kategori_id' => 'required',
-            'barang_nama' => 'required',
-            'harga_beli' => 'required',
-            'harga_jual' => 'required'
+            'barang_kode' => 'required|string|min:6|max:10|unique:m_barang,barang_kode',
+            'kategori_id' => 'required|integer',
+            'barang_nama' => 'required|string|max:100',
+            'harga_beli' => 'required|integer',          
+            'harga_jual' => 'required|integer',  
         ]);
 
         BarangModel::create($request->all());
@@ -128,10 +129,11 @@ class BarangController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'kategori_id' => 'required',
-            'barang_nama' => 'required',
-            'harga_beli' => 'required',
-            'harga_jual' => 'required'
+            'barang_kode' => 'required|string|min:6|max:10',
+            'kategori_id' => 'required|integer',
+            'barang_nama' => 'required|string|max:100',
+            'harga_beli' => 'required|integer',          
+            'harga_jual' => 'required|integer', 
         ]);
 
         BarangModel::find($id)->update($request->all());
@@ -151,7 +153,7 @@ class BarangController extends Controller
             BarangModel::destroy($id);
             return redirect('/barang')->with('success', 'Data barang berhasil dihapus');
         } catch (\Illuminate\Database\QueryException $e) {
-            return redirect('/barang')->with('error', 'Data barang gagal dihapus');
+            return redirect('/barang')->with('error', 'Data barang gagal dihapus' . $e->getMessage());
         }
     }
 }

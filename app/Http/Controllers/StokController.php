@@ -78,9 +78,10 @@ class StokController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'barang_id' => 'required',
-            'stok_tanggal' => 'required',
-            'stok_jumlah' => 'required'
+            'barang_id' => 'required|integer',
+            'user_id' => 'required|integer',
+            'stok_tanggal' => 'required|date',
+            'stok_jumlah' => 'required|integer|max:10',
         ]);
 
         StokModel::create($request->all());
@@ -129,10 +130,9 @@ class StokController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'barang_id' => 'required',
-            'stok_tanggal' => 'required',
-            'stok_jumlah' => 'required',
-            'stok_keterangan' => 'required'
+            'barang_id' => 'required|integer',
+            'stok_tanggal' => 'required|date',
+            'stok_jumlah' => 'required|integer|max:10',
         ]);
 
         StokModel::find($id)->update($request->all());
@@ -152,7 +152,7 @@ class StokController extends Controller
             StokModel::destroy($id);
             return redirect('/stok')->with('success', 'Data stok berhasil dihapus!');
         } catch (\Illuminate\Database\QueryException $e) {
-            return redirect('/stok')->with('error', 'Data stok gagal dihapus!');
+            return redirect('/stok')->with('error', 'Data stok gagal dihapus!' . $e->getMessage());
         }
     }
 }
