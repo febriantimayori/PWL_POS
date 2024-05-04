@@ -3,20 +3,19 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\BarangModel;
+use App\Models\TransaksiModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class BarangController extends Controller
+class TransaksiController extends Controller
 {
     public function __invoke(Request $request) {
         // set validation
         $validator = Validator::make($request->all(), [
-            'barang_kode' => 'required',
-            'kategori_id' => 'required',
-            'barang_nama' => 'required',
-            'harga_beli' => 'required',
-            'harga_jual' => 'required',
+            'user_id' => 'required',
+            'pembeli' => 'required',
+            'penjualan_kode' => 'required',
+            'penjualan_tanggal' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ]);
 
@@ -26,12 +25,11 @@ class BarangController extends Controller
         }
 
         // create barang
-        $user = BarangModel::create([
-            'barang_kode' => $request->barang_kode,
-            'kategori_id' => $request->kategori_id,
-            'barang_nama' => $request->barang_nama,
-            'harga_beli' => $request->harga_beli,
-            'harga_jual' => $request->harga_jual,
+        $user = TransaksiModel::create([
+            'user_id' => $request->user_id,
+            'pembeli' => $request->pembeli,
+            'penjualan_kode' => $request->penjualan_kode,
+            'penjualan_tanggal' => $request->penjualan_tanggal,
             'image' => $request->image->hashName(),
         ]);
 
@@ -49,23 +47,23 @@ class BarangController extends Controller
         ], 409);
     }
 
-    // Fungsi untuk menampilkan data barang yang telah didaftarkan
+    // Fungsi untuk menampilkan data transaksi yang telah didaftarkan
     public function show($id)
     {
-        $barang = BarangModel::find($id);
+        $transaksi = TransaksiModel::find($id);
 
-        // Jika barang ditemukan
-        if ($barang) {
+        // Jika transaksi ditemukan
+        if ($transaksi) {
             return response()->json([
                 'success' => true,
-                'barang' => $barang,
+                'transaksi' => $transaksi,
             ], 200);
         }
 
-        // Jika barang tidak ditemukan
+        // Jika transaksi tidak ditemukan
         return response()->json([
             'success' => false,
-            'message' => 'Barang not found.',
+            'message' => 'Transaksi not found.',
         ], 404);
     }
 }

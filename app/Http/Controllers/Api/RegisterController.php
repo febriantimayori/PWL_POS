@@ -46,4 +46,24 @@ class RegisterController extends Controller
             'success' => false,
         ], 409);
     }
+
+    // Fungsi untuk menampilkan data pengguna yang telah didaftarkan
+    public function show($id)
+    {
+        $user = UserModel::find($id);
+
+        // Jika pengguna ditemukan
+        if ($user) {
+            return response()->json([
+                'success' => true,
+                'user' => $user,
+            ], 200);
+        }
+
+        // Jika pengguna tidak ditemukan
+        return response()->json([
+            'success' => false,
+            'message' => 'User not found.',
+        ], 404);
+    }
 }
