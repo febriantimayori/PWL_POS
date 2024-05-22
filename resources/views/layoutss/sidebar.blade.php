@@ -72,6 +72,13 @@
             <p>Transaksi Penjualan</p>
           </a>
         </li>
+        <li class="nav-header">File Upload</li>
+        <li class="nav-item">
+          <a href="{{ url('/upload') }}" class="nav-link {{ ($activeMenu == 'upload')? 'active' : ''}} ">
+            <i class="nav-icon fas fa-cloud-upload-alt"></i>
+            <p>Upload Image</p>
+          </a>
+        </li>
       </ul>
     </nav>
     <!-- /.sidebar-menu -->

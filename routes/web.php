@@ -14,6 +14,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\FormUploadController;
+use App\Http\Controllers\FormImgController;
+use App\Http\Controllers\ShowImgController;
 
 /*
 |--------------------------------------------------------------------------
@@ -133,6 +135,10 @@ Route::group(['middleware' => ['auth']], function () {
 Route::get('/file-upload', [FileUploadController::class,'fileUpload']);
 Route::post('/file-upload', [FileUploadController::class,'prosesFileUpload']);
 
-// JS 12 - Tugas
+// JS 12 - Tugas No. 1
 Route::get('/formUpload', [FormUploadController::class, 'formUpload']);
 Route::post('/formUpload', [FormUploadController::class, 'uploadFile']);
+
+// JS 12 - Tugas No. 2
+Route::get('/upload', [FormImgController::class, 'imgUpload']);
+Route::post('/upload', [FormImgController::class, 'prosesImgUpload']);
